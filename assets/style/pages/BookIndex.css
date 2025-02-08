@@ -1,0 +1,21 @@
+.book-index {
+    padding: 20px;
+}
+
+.book-index ul {
+    list-style: none;
+    padding: 0;
+}
+
+.book-index li {
+    margin: 10px 0;
+}
+
+.book-index a {
+    text-decoration: none;
+    color: blue;
+}
+
+.book-index a:hover {
+    text-decoration: underline;
+}

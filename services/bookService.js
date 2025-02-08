@@ -1,4 +1,4 @@
-import {storageService, storagService} from "./async-storage.service"
+import {storageService} from "./async-storage.service.js"
 
 const BOOKS_KEY = 'books';
 
@@ -6,7 +6,8 @@ export const bookService = {
     query,
     get,
     remove,
-    save
+    save,
+    getEmptyBook
 }
 
 const demoBooks = [
@@ -27,11 +28,11 @@ const demoBooks = [
     },
 ]
 
-async function query(filterBy = {}) {
-    let books = await storagService.query(BOOKS_KEY)
+async function query() {
+    let books = await storageService.query(BOOKS_KEY)
     if(!books || books.length===0){
         books = demoBooks
-        books.forEach(book => storagService.post(BOOKS_KEY,book));
+        books.forEach(book => storageService.post(BOOKS_KEY,book));
     }
 
     // return storageService.query(BOOKS_KEY)
@@ -48,20 +49,25 @@ async function query(filterBy = {}) {
 }
 
 function get(bookId){
-    return storagService.get(BOOKS_KEY,bookId)
+    return storageService.get(BOOKS_KEY,bookId)
 }
 
 function remove(bookId){
-    return storagService.remove(BOOKS_KEY.bookId)
+    return storageService.remove(BOOKS_KEY.bookId)
 }
 
 function save(book){
     if(book.id){
-        return storagService.put(BOOKS_KEY,book)
+        return storageService.put(BOOKS_KEY,book)
     }
     else{
         return storageService.post(BOOKS_KEY,book)
     }
+}
+
+function getEmptyBook({title='',listPrice ={amount:0,currencyCode:'USD',}}){
+    return{title,listPrice}
+
 }
 
 query();

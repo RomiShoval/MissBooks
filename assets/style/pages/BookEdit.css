@@ -1,0 +1,15 @@
+.book-edit {
+    text-align: center;
+    padding: 20px;
+}
+
+.book-edit form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.book-edit input {
+    padding: 5px;
+}
