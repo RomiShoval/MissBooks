@@ -7,7 +7,7 @@ export function AppHeader() {
                 <h1>React Car App</h1>
                 <nav className="app-nav">
                     <NavLink to="/home" >Home</NavLink>
-                    <NavLink to="/about"  >About Us</NavLink>
+                    <NavLink to="/about" >About Us</NavLink>
                     <NavLink to="/books" >Books</NavLink>
                 </nav>
             </section>
