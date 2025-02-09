@@ -9,7 +9,15 @@ export function BookDetails(){
     // const navigate = useNavigate()
 
     useEffect(() =>{
-        bookService.get(params.bookId).then(setBook)
+        bookService.get(params.bookId)
+        .then(fetchedBooks =>{
+            if(!fetchedBooks) throw new Error ("Book not found")
+                setBook(fetchedBooks)
+        }).catch(err => {
+            console.error('Error fetching books :' , err)
+            setBook(null)
+        })
+        
     },[params.bookId])
 
     if(!book) return <div>Loading...</div>
@@ -18,6 +26,7 @@ export function BookDetails(){
         <div className="book-details">
             <h2>{book.title}</h2>
             <p>Price: {book.listPrice.amount} {book.listPrice.currencyCode}</p>
+            <Link to="/book">Back to Book List</Link>
         </div>
     )
 }

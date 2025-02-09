@@ -3,7 +3,7 @@ import {storageService} from "./async-storage.service.js"
 const BOOKS_KEY = 'books';
 
 export const bookService = {
-    query,
+    loadBooks,
     get,
     remove,
     save,
@@ -28,24 +28,18 @@ const demoBooks = [
     },
 ]
 
-async function query() {
+async function loadBooks() {
     let books = await storageService.query(BOOKS_KEY)
-    if(!books || books.length===0){
-        books = demoBooks
-        books.forEach(book => storageService.post(BOOKS_KEY,book));
+    if(!books || books.length ===0){
+        console.log("No books found. Initializing with demo books.");
+        books = [...demoBooks]
+        await storageService.postMany(BOOKS_KEY, books);
+        // console.log(books)
+        // await Promise.all(books.map(book => storageService.post(BOOKS_KEY, book)));
+        books = await storageService.query(BOOKS_KEY)
     }
-
-    // return storageService.query(BOOKS_KEY)
-    //     .then(books => {
-    //         if (filterBy.txt) {
-    //             const regExp = new RegExp(filterBy.txt, 'i')
-    //             books = books.filter(book => regExp.test(book.title))
-    //         }
-    //         // if (filterBy.minSpeed) {
-    //         //     cars = cars.filter(car => car.speed >= filterBy.minSpeed)
-    //         // }
-    //         return books
-    //     })
+    console.log("Fetched books:",books)
+    return books
 }
 
 function get(bookId){
@@ -53,7 +47,7 @@ function get(bookId){
 }
 
 function remove(bookId){
-    return storageService.remove(BOOKS_KEY.bookId)
+    return storageService.remove(BOOKS_KEY,bookId)
 }
 
 function save(book){
@@ -70,4 +64,4 @@ function getEmptyBook({title='',listPrice ={amount:0,currencyCode:'USD',}}){
 
 }
 
-query();
+loadBooks();

@@ -8,13 +8,15 @@ export function BookIndex(){
     const[books,setBooks] = useState([])
 
     useEffect(()=>{
-        bookService.query().then(fetchedBooks =>{
+        bookService.loadBooks().then(fetchedBooks =>{
             setBooks(fetchedBooks || [])
         }).catch(err => {
             console.error('Error fetching books',err)
             setBooks([])
         })
     },[])
+
+    if(!books) return(<div>Loading...</div>)
 
 
     return (

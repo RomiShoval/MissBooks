@@ -4,6 +4,7 @@ export const storageService = {
     post,
     put,
     remove,
+    postMany
 }
 
 function query(entityType, delay = 500) {
@@ -23,10 +24,29 @@ function post(entityType, newEntity) {
     newEntity = { ...newEntity }
     newEntity.id = _makeId()
     return query(entityType).then(entities => {
+        if (!Array.isArray(entities)) entities = []
+        if (entities.some(entity => entity.id === newEntity.id)) {
+            console.warn(`Book with id ${newEntity.id} already exists. Skipping.`);
+            return newEntity;
+        }
         entities.push(newEntity)
         _save(entityType, entities)
+        console.log(`Saved new entity to ${entityType}:`, newEntity);
         return newEntity
     })
+}
+
+async function postMany(entityType, newEntities) {
+    let entities = await query(entityType);
+    if (!Array.isArray(entities)) entities = [];
+
+    newEntities.forEach(newEntity => {
+        if (!entities.some(entity => entity.id === newEntity.id)) {
+            entities.push(newEntity);
+        }
+    });
+    _save(entityType, entities)
+    return entities
 }
 
 function put(entityType, updatedEntity) {
