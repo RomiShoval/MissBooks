@@ -1,0 +1,14 @@
+.book-preview {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+.book-preview a {
+    display: block;
+    margin-top: 5px;
+    text-decoration: none;
+    color: blue;
+}
+.book-preview a:hover {
+    text-decoration: underline;
+}

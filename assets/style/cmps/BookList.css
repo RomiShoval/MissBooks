@@ -1,0 +1,8 @@
+.book-list {
+    list-style: none;
+    padding: 0;
+}
+
+.book-list li {
+    margin: 10px 0;
+}

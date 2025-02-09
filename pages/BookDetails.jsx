@@ -1,7 +1,7 @@
 import { bookService } from "../services/bookService.js";
 import "../assets/style/pages/BookDetails.css"
 const { useEffect, useState } = React
-const { useParams, useNavigate, Link } = ReactRouterDOM
+const { useParams, Link } = ReactRouterDOM
 
 export function BookDetails(){
     const[book,setBook] = useState(null)

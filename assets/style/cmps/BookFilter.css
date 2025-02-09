@@ -1,0 +1,8 @@
+.book-filter {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.book-filter input {
+    padding: 5px;
+}
