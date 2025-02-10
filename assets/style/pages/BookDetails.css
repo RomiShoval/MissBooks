@@ -2,3 +2,30 @@
     text-align: center;
     padding: 20px;
 }
+
+.price-high {
+    color: red;
+    font-weight: bold;
+}
+
+.price-low {
+    color: green;
+    font-weight: bold;
+}
+
+.price-normal {
+    color: black;
+}
+
+.on-sale-sign {
+    display: inline-block;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    text-transform: uppercase;
+    animation: pulse 1.5s infinite;
+}
