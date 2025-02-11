@@ -6,8 +6,10 @@ html {}
 
 body {
     margin: 0;
-    color: var(--gray3);
+    color: #333;
     font-size: 1.2rem;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
 }
 
 h1,
@@ -22,6 +24,8 @@ h6 {
 
 p {
     margin: 0 0 1em;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
 a {

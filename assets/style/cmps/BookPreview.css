@@ -8,7 +8,7 @@
 }
 
 .book-preview a {
-    color: #007bff;
+    color: #e663bf;
     text-decoration: none;
 }
 
@@ -19,6 +19,6 @@
 .book-preview p {
     font-size: 18px;
     font-weight: bold;
-    color: #28a745;
+    color: #c92eba;
     margin-bottom: 10px;
 }

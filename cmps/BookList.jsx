@@ -10,6 +10,7 @@ export function BookList({ books ,onRemoveBook }) {
             ) :(
             books.map(book => (
                 <li key={book.id} className="book-card">
+                    <img src={book.thumbnail} alt={book.title} />
                     <BookPreview book={book} />
                     <section className="book-actions">
                         <button className="delete-btn" onClick={() => onRemoveBook(book.id)}> Remove</button>
