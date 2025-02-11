@@ -2,13 +2,11 @@ import { bookService } from "../services/bookService.js";
 import "../assets/style/pages/BookEdit.css"
 
 const { useState, useEffect } = React
-const { useParams, useNavigate, Link } = ReactRouterDOM
+const { useParams, Link } = ReactRouterDOM
 
 export function BookEdit(){
     const[bookToEdit,setBookToEdit] = useState(bookService.getEmptyBook())
-    // const [isLoading, setIsLoading] = useState(false)
-
-    // const navigate = useNavigate()
+    
     const { bookId } = useParams()
 
     useEffect(() => {
@@ -16,35 +14,28 @@ export function BookEdit(){
     }, [bookId])
 
     function loadBook() {
-        // setIsLoading(true)
         bookService.get(bookId)
             .then(setBookToEdit)
             .catch(err => {
                 console.log('Cannot load book:', err)
             })
-            // .finally(() => setIsLoading(false))
     }
 
     function handleChangeListPrice({ target }) {
-        const { value } = target;
+        let value = target.value;
+        if (value !== "") {
+            value = value.replace(/^0+/, ''); 
+        }
         setBookToEdit(prevBook => ({
             ...prevBook,
-            listPrice: {...prevBook.listPrice,amount: Number(value) || 0}
+            listPrice: {...prevBook.listPrice,amount: value === "" ? "" : Number(value)}
         }));
     }
 
 
     function handleChange(ev){
         const { name :field, value } = ev.target;
-
-
         setBookToEdit(prevBook => ({...prevBook,[field]: value}));
-        // const { name :field, value } = target
-        // console.log("🔍 handleChange triggered: ", field, value)
-        // // if(target.type === 'number'){
-        // //     value = Number(value)
-        // // }
-        // setBookToEdit((prevBook) =>({...prevBook,[field] : value}))
     }
 
 

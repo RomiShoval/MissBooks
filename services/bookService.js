@@ -484,29 +484,43 @@ async function query(filterBy={}) {
       }
       console.log("Filter applied:", filterBy)
 
-      const titleFilter = filterBy.title ? filterBy.title.toLowerCase() : "";
-      const minPrice = filterBy.minPrice ? Number(filterBy.minPrice) : 0;
-      const maxPrice = filterBy.maxPrice && filterBy.maxPrice !== '' ? Number(filterBy.maxPrice) : Infinity;
+    const titleFilter = filterBy.title ? filterBy.title.toLowerCase() : ""
+    const minPrice = filterBy.minPrice ? Number(filterBy.minPrice) : 0
+    const maxPrice = filterBy.maxPrice && filterBy.maxPrice !== '' ? Number(filterBy.maxPrice) : Infinity
+    const selectedCategory = filterBy.category && filterBy.category !== "All" ? filterBy.category : null
+    const selectedLanguage = filterBy.language && filterBy.language !== "All" ? filterBy.language : null
+    const isOnSaleFilter = filterBy.isOnSale || false
 
       const filteredBooks = books.filter(book => {
-        const price = book.listPrice.amount || 0; // Ensure price exists
+        const price = book.listPrice.amount || 0
+        const matchesTitel = book.title.toLowerCase().includes(titleFilter)
+        const matchesPrice = price >= minPrice && price <= maxPrice
+        const matchesCategory = selectedCategory ?  book.categories.includes(selectedCategory) : true
+        const matchesLanguage = selectedLanguage ? book.language === selectedLanguage : true
+        const matchesSale = !isOnSaleFilter || book.listPrice.isOnSale
 
-        return (
-            book.title.toLowerCase().includes(titleFilter) &&
-            price >= minPrice &&
-            price <= maxPrice
-        )
+        return matchesTitel && matchesPrice && matchesCategory && matchesLanguage && matchesSale
     }) 
     console.log("Books after filtering:", filteredBooks);
     return filteredBooks;
   })
 }
    
-
+function _setNextPrevBookId(book) {
+  return query().then((books) => {
+      const bookIdx = books.findIndex((currBook) => currBook.id === book.id)
+      const nextBook = books[bookIdx + 1] ? books[bookIdx + 1] : books[0]
+      const prevBook = books[bookIdx - 1] ? books[bookIdx - 1] : books[books.length - 1]
+      book.nextBookId = nextBook.id
+      book.prevBookId = prevBook.id
+      return book
+  })
+}
 
 
 function get(bookId){
     return storageService.get(BOOKS_KEY,bookId)
+      .then(_setNextPrevBookId)
 }
 
 function remove(bookId){
@@ -531,7 +545,7 @@ function getEmptyBook(){
 }
 
 function getDefaultFilter(){
-    return{ title: '', minPrice: 0, maxPrice: ''}
+    return{ title: '', minPrice: 0, maxPrice: '', category :'',language:''}
 }
 
 // loadBooks();

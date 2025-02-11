@@ -2,6 +2,7 @@ import { bookService } from "../services/bookService.js";
 import "../assets/style/pages/BookDetails.css"
 const { useEffect, useState } = React
 const { useParams, Link } = ReactRouterDOM
+import { LongTxt } from "../cmps/LongTxt.jsx";
 
 export function BookDetails(){
     const[book,setBook] = useState(null)
@@ -20,8 +21,6 @@ export function BookDetails(){
         
     },[params.bookId])
 
-    if(!book) return <div>Loading...</div>
-
     const getReadingLevel = (pageCount) =>{
         if(pageCount > 500) return "📖 Serious Reading"
         if(pageCount > 200) return "📘 Descent Reading"
@@ -38,7 +37,10 @@ export function BookDetails(){
         if (amount > 150) return "price-high";  // Red
         if (amount < 20) return "price-low";   // Green
         return "price-normal"; // Default
-    };
+    }
+
+    if(!book) return <div>Loading...</div>
+
     return(
         <div className="book-details">
             <h2>{book.title}</h2>
@@ -46,13 +48,17 @@ export function BookDetails(){
             {book.listPrice.isOnSale && <div className="on-sale-sign">🔥 ON SALE 🔥</div>}
             <p><strong>Author(s):</strong> {book.authors.join(", ")}</p>
             <p><strong>Published Date:</strong> {book.publishedDate}<span>({getStylePublishDate(book.publishedDate)})</span></p>
-            <p><strong>Description:</strong> {book.description}</p>
+            <p><strong>Description:</strong><LongTxt txt ={book.description} length={150}/> {book.description}</p>
             <p><strong>Page Count:</strong> {book.pageCount} <span className="reading-level">({getReadingLevel(book.pageCount)})</span></p>
             <p><strong>Categories:</strong> {book.categories.join(", ")}</p>
             <p><strong>Language:</strong> {book.language}</p>
             <p><strong>Price:</strong> <span className={getPriceClass(book.listPrice.amount)}>{book.listPrice.amount} {book.listPrice.currencyCode}</span></p>
             <img src={book.thumbnail} alt={book.title} className="book-thumbnail"/>
             <br/>
+            <section>
+                <button ><Link to={`/book/${book.prevBookId}`}>Prev Book</Link></button>
+                <button ><Link to={`/book/${book.nextBookId}`}>Next Book</Link></button>
+            </section>
             <Link to="/book" className="back-btn">⬅ Back to Book List</Link>
         </div>
     )
