@@ -45,9 +45,9 @@ export function BookIndex(){
 
     return (
         <div className="book-index">
-            <h2>Book List</h2>
+            <h2>📚 Book List</h2>
             <BookFilter filterBy={filterBy} onSetFilter={onSetFilter}/>
-            <Link to="/book/edit">Add Book</Link>
+            <button><Link to="/book/edit">Add Book</Link></button>
             <BookList 
                 books={books}
                 onRemoveBook={onRemoveBook} />

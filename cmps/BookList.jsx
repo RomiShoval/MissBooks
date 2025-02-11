@@ -9,10 +9,10 @@ export function BookList({ books ,onRemoveBook }) {
                 <p>No books found.</p>
             ) :(
             books.map(book => (
-                <li key={book.id}>
+                <li key={book.id} className="book-card">
                     <BookPreview book={book} />
-                    <section>
-                        <button onClick={() => onRemoveBook(book.id)}> Remove</button>
+                    <section className="book-actions">
+                        <button className="delete-btn" onClick={() => onRemoveBook(book.id)}> Remove</button>
                         <button><Link to={`/book/${book.id}`}>Details</Link></button>
                         <button><Link to={`/book/edit/${book.id}`}>Edit</Link></button>
                     </section>

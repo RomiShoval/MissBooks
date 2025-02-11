@@ -27,11 +27,11 @@ export function BookFilter({ filterBy, onSetFilter }) {
     }
 
     return (
-        <div className="book-filter">
+        <div className="book-filter-container">
             <input 
                 type="text"
                 name="title" 
-                placeholder="Search by title" 
+                placeholder="🔎 Search by title" 
                 value={filterByToEdit.title} 
                 onChange={handleChange} />
             <input 

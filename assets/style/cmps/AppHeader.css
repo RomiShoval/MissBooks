@@ -1,22 +1,26 @@
 .app-header {
     background-color: #333;
     color: white;
-    padding: 10px;
+    padding: 15px 20px;
     text-align: center;
 }
 
-.app-nav {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+.app-header h1 {
+    margin: 0;
+    font-size: 24px;
 }
 
-.app-header a {
+.app-nav {
+    margin-top: 10px;
+}
+
+.app-nav a {
     color: white;
+    margin: 0 10px;
     text-decoration: none;
     font-weight: bold;
 }
 
-.app-header a:hover {
+.app-nav a:hover {
     text-decoration: underline;
 }
