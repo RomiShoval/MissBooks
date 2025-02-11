@@ -2,12 +2,13 @@ import { bookService } from "../services/bookService.js";
 import "../assets/style/pages/BookEdit.css"
 
 const { useState, useEffect } = React
-const { useParams, Link } = ReactRouterDOM
+const { useParams, Link,useNavigate } = ReactRouterDOM
 
 export function BookEdit(){
     const[bookToEdit,setBookToEdit] = useState(bookService.getEmptyBook())
     
     const { bookId } = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (bookId) loadBook()

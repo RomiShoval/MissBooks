@@ -478,9 +478,10 @@ async function query(filterBy={}) {
   return storageService.query(BOOKS_KEY)
     .then(books =>{
       console.log('books retrieved from storage :' , books)
-      if(!books || !Array.isArray(books)){
-        console.warn("No books found in storage")
-        return []
+      if(!books || !Array.isArray(books) || books.length === 0){
+        console.log("No books found in storage")
+        saveBooks()
+        return booksData
       }
       console.log("Filter applied:", filterBy)
 
@@ -504,6 +505,11 @@ async function query(filterBy={}) {
     console.log("Books after filtering:", filteredBooks);
     return filteredBooks;
   })
+}
+
+function saveBooks(){
+  console.log("📚 Initializing books in Local Storage...");
+  storageService.postMany(BOOKS_KEY,booksData)
 }
    
 function _setNextPrevBookId(book) {
@@ -545,7 +551,7 @@ function getEmptyBook(){
 }
 
 function getDefaultFilter(){
-    return{ title: '', minPrice: 0, maxPrice: '', category :'',language:''}
+    return{ title: '', minPrice: 0, maxPrice: '', category :null,language:null}
 }
 
 // loadBooks();
