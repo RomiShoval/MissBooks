@@ -58,6 +58,7 @@ export function BookDetails(){
             <section>
                 <button ><Link to={`/book/${book.prevBookId}`}>Prev Book</Link></button>
                 <button ><Link to={`/book/${book.nextBookId}`}>Next Book</Link></button>
+                <button><Link to = {`/book/${book.id}/addreview`}>Add Review</Link></button>
             </section>
             <Link to="/book" className="back-btn">⬅ Back to Book List</Link>
         </div>

@@ -2,6 +2,7 @@ import { bookService } from "../services/bookService.js";
 import "../assets/style/pages/BookIndex.css"
 import { BookList } from "../cmps/BookList.jsx";
 import { BookFilter } from "../cmps/BookFilter.jsx";
+import {sendSuccsessMsg , sendErrorMsg} from "../services/eventBusService.js"
 
 const { useState, useEffect } = React
 const { Link } = ReactRouterDOM
@@ -30,10 +31,14 @@ export function BookIndex(){
     function onRemoveBook(bookId){
         bookService.remove(bookId)
             .then(()=>{
+                console.log('try to delete')
                 setBooks(books => books.filter(book => book.id!==bookId))
+                sendSuccsessMsg(`Book ${bookId} deleted successfuly!`)
             })
-            .catch(() =>{
+            .catch((err) =>{
+                console.log(`doesnt delete`)
                 console.log('Cannot remove book :' ,err)
+                sendErrorMsg(`Book had a problem to be removed`)
             })
     }
 

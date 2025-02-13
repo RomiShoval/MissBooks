@@ -54,13 +54,14 @@ export function BookEdit(){
 
     return (
         <div className="book-edit">
-            <h2>{bookId ? 'Edit' : 'Add'}Book</h2>
+            <h2>{bookId ? 'Edit' : 'Add'} Book</h2>
             <form onSubmit={onSaveBook}>
                 <label>Title:</label>
                 <input 
                     name="title" 
                     value={bookToEdit.title} 
                     onChange={handleChange} />
+                    <br></br>
                 <label>Price:</label>
                 <input 
                     name="listPrice.amount" 

@@ -8,7 +8,8 @@ export const bookService = {
     remove,
     save,
     getEmptyBook,
-    getDefaultFilter
+    getDefaultFilter,
+    addReview
 }
 
 
@@ -554,4 +555,15 @@ function getDefaultFilter(){
     return{ title: '', minPrice: 0, maxPrice: '', category :null,language:null}
 }
 
-// loadBooks();
+async function addReview(bookId,review){
+  let book = await get(bookId)
+    if(!book){
+      console.error(`Book with ID ${bookId} not found.`)
+      return null
+    }
+    if(!book.reviews) book.reviews=[]
+    console.log(review)
+    book.reviews.push(review)
+    await save(book)
+    return book
+}
