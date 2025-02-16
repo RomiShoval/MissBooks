@@ -10,7 +10,8 @@ export const bookService = {
     getEmptyBook,
     getDefaultFilter,
     addReview,
-    deleteReview
+    deleteReview,
+    addGoogleBook
 }
 
 
@@ -514,7 +515,7 @@ function saveBooks(){
   storageService.postMany(BOOKS_KEY,booksData)
 }
    
-function _setNextPrevBookId(book) {
+async function _setNextPrevBookId(book) {
   return query().then((books) => {
       const bookIdx = books.findIndex((currBook) => currBook.id === book.id)
       const nextBook = books[bookIdx + 1] ? books[bookIdx + 1] : books[0]
@@ -526,7 +527,7 @@ function _setNextPrevBookId(book) {
 }
 
 
-function get(bookId){
+async function get(bookId){
     return storageService.get(BOOKS_KEY,bookId)
       .then(_setNextPrevBookId)
 }
@@ -579,4 +580,43 @@ async function deleteReview(bookId,reviewIndex){
   book.reviews.splice(reviewIndex,1)
   await save(book)
   return book
+}
+
+async function addGoogleBook(googleBook){
+  // let books = await queryBooksFromGoogle()
+  
+  if (books.some(book => book.id === googleBook.id)) {
+      console.warn("Book already exists in the database.");
+      return Promise.reject("Book already exists.");
+  }
+
+  if(!googleBook || !googleBook.volumeInfo){
+      console.error("Invalid book data:", googleBook);
+      return Promise.reject("Invalid book data");
+  }
+
+  const newBook = {
+    id:googleBook.id,
+    title: googleBook.volumeInfo.title || "No Title",
+    subtitle: googleBook.volumeInfo.subtitle || "",
+    authors: googleBook.volumeInfo.authors || ["Unknown"],
+    publishedDate: googleBook.volumeInfo.publishedDate || "Unknown",
+    description: googleBook.volumeInfo.description || "No description available.",
+    pageCount: googleBook.volumeInfo.pageCount || 0,
+    categories: googleBook.volumeInfo.categories || ["General"],
+    thumbnail: googleBook.volumeInfo.imageLinks.thumbnail || "",
+    language: googleBook.volumeInfo.language || "Unknown",
+    listPrice: {
+        amount: 0,
+        currencyCode:  "USD",
+        isOnSale:  "FOR_SALE"
+    },
+  }
+
+  return save(newBook).then(() => newBook)
+  
+}
+
+function queryBooksFromGoogle(){
+  return Promise.resolve(JSON.parse(localStorage.getItem("books")) || [])
 }

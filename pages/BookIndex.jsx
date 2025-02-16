@@ -5,11 +5,16 @@ import { BookFilter } from "../cmps/BookFilter.jsx";
 import {sendSuccsessMsg , sendErrorMsg} from "../services/eventBusService.js"
 
 const { useState, useEffect } = React
-const { Link } = ReactRouterDOM
+const { Link,useNavigate } = ReactRouterDOM
 
 export function BookIndex(){
     const[books,setBooks] = useState([])
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
+    const navigate = useNavigate();
+
+    function goToAddBook() {
+        navigate("/book/add");
+    }
 
     useEffect(()=>{
         loadBooks()
@@ -52,7 +57,9 @@ export function BookIndex(){
         <div className="book-index">
             <h2>📚 Book List</h2>
             <BookFilter filterBy={filterBy} onSetFilter={onSetFilter}/>
-            <button><Link to="/book/edit">Add Book</Link></button>
+            <button onClick={goToAddBook}>Add Book
+                {/* <Link to="/book/add">Add Book</Link> */}
+            </button>
             <BookList 
                 books={books}
                 onRemoveBook={onRemoveBook} />
