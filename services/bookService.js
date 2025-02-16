@@ -1,4 +1,5 @@
 import {storageService} from "./async-storage.service.js"
+import {makeId} from "./util.service.js"
 
 const BOOKS_KEY = 'books';
 
@@ -536,13 +537,13 @@ function remove(bookId){
     return storageService.remove(BOOKS_KEY,bookId)
 }
 
-function save(book){
-    if(book.id){
-        return storageService.put(BOOKS_KEY,book)
-    }
-    else{
-        return storageService.post(BOOKS_KEY,book)
-    }
+async function save(book){
+  const existingBook = await get(book.id)
+  if (existingBook) {
+      return storageService.put(BOOKS_KEY, book)
+  } else {
+      return storageService.post(BOOKS_KEY, book)
+  }
 }
 
 function getEmptyBook(){
@@ -583,40 +584,43 @@ async function deleteReview(bookId,reviewIndex){
 }
 
 async function addGoogleBook(googleBook){
-  // let books = await queryBooksFromGoogle()
+  if(!googleBook || !googleBook.volumeInfo){
+      console.error("Invalid book data:", googleBook);
+      return Promise.reject("Invalid book data");
+  }
+  const books = await query()
   
   if (books.some(book => book.id === googleBook.id)) {
       console.warn("Book already exists in the database.");
       return Promise.reject("Book already exists.");
   }
 
-  if(!googleBook || !googleBook.volumeInfo){
-      console.error("Invalid book data:", googleBook);
-      return Promise.reject("Invalid book data");
-  }
+  const imageLinks = googleBook.volumeInfo.imageLinks || {}
+  const volumeInfo = googleBook.volumeInfo || {}
 
   const newBook = {
     id:googleBook.id,
-    title: googleBook.volumeInfo.title || "No Title",
-    subtitle: googleBook.volumeInfo.subtitle || "",
-    authors: googleBook.volumeInfo.authors || ["Unknown"],
-    publishedDate: googleBook.volumeInfo.publishedDate || "Unknown",
-    description: googleBook.volumeInfo.description || "No description available.",
-    pageCount: googleBook.volumeInfo.pageCount || 0,
-    categories: googleBook.volumeInfo.categories || ["General"],
-    thumbnail: googleBook.volumeInfo.imageLinks.thumbnail || "",
-    language: googleBook.volumeInfo.language || "Unknown",
+    title: volumeInfo.title || "No Title",
+    subtitle: volumeInfo.subtitle || "",
+    authors: volumeInfo.authors || ["Unknown"],
+    publishedDate: volumeInfo.publishedDate || "Unknown",
+    description: volumeInfo.description || "No description available.",
+    pageCount: volumeInfo.pageCount || 0,
+    categories: volumeInfo.categories || ["General"],
+    thumbnail: imageLinks.thumbnail || "",
+    language: volumeInfo.language || "Unknown",
     listPrice: {
-        amount: 0,
+        amount: Math.floor(Math.random() * 50) + 10,
         currencyCode:  "USD",
-        isOnSale:  "FOR_SALE"
+        isOnSale: Math.random() > 0.5
     },
   }
-
-  return save(newBook).then(() => newBook)
-  
+  console.log("saving new book")
+  books.push(newBook)
+  await storageService.postMany(BOOKS_KEY,books)
+  return newBook
 }
 
-function queryBooksFromGoogle(){
-  return Promise.resolve(JSON.parse(localStorage.getItem("books")) || [])
-}
+// function queryBooksFromGoogle(){
+//   return Promise.resolve(JSON.parse(localStorage.getItem("books")) || [])
+// }
