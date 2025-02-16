@@ -39,6 +39,15 @@ export function BookDetails(){
         return "price-normal"; // Default
     }
 
+    function onDeleteReview(reviewIndex){
+        bookService.deleteReview(book.id,reviewIndex)
+            .then(updatedBook =>{
+                console.log(`succseed to remove the review`)
+                setBook(updatedBook)
+            })
+            .catch(err => console.error("Error deleting review:",err))
+    }
+
     if(!book) return <div>Loading...</div>
 
     return(
@@ -55,6 +64,21 @@ export function BookDetails(){
             <p><strong>Price:</strong> <span className={getPriceClass(book.listPrice.amount)}>{book.listPrice.amount} {book.listPrice.currencyCode}</span></p>
             <img src={book.thumbnail} alt={book.title} className="book-thumbnail"/>
             <br/>
+            <h3>Reviews :</h3>
+            {book.reviews && book.reviews.length > 0 ?  (
+                <ul className="review-list">
+                    {book.reviews.map((review , index) =>(
+                        <li key={index} className="review-item">
+                            <p><strong>Name:</strong>{review.fullName}</p>
+                            <p><strong>Reting:</strong>{review.rateBook}</p>
+                            <p><strong>Read At:</strong>{review.readAt}</p>
+                            <button className="delete-review-btn" onClick={() => onDeleteReview(index)}>🗑️ Delete Review</button>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No reviews for this book</p>
+            )}
             <section>
                 <button ><Link to={`/book/${book.prevBookId}`}>Prev Book</Link></button>
                 <button ><Link to={`/book/${book.nextBookId}`}>Next Book</Link></button>

@@ -9,7 +9,8 @@ export const bookService = {
     save,
     getEmptyBook,
     getDefaultFilter,
-    addReview
+    addReview,
+    deleteReview
 }
 
 
@@ -566,4 +567,16 @@ async function addReview(bookId,review){
     book.reviews.push(review)
     await save(book)
     return book
+}
+
+async function deleteReview(bookId,reviewIndex){
+  let book = await get(bookId)
+  if(!book || !book.reviews){
+    console.error(`Book with id ${bookId} not found or doesnt contains any reviews`)
+    return null;
+  }
+
+  book.reviews.splice(reviewIndex,1)
+  await save(book)
+  return book
 }
