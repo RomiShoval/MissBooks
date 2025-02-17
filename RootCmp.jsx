@@ -7,8 +7,10 @@ import {BookDetails} from "./pages/BookDetails.jsx"
 import {BookIndex} from "./pages/BookIndex.jsx"
 import {BookEdit} from "./pages/BookEdit.jsx"
 import { UserMsg } from "./cmps/UserMsg.jsx"
-import { AddReview } from "./assets/style/cmps/AddReview.jsx"
+import { AddReview } from "./cmps/AddReview.jsx"
 import { BookAdd } from "./cmps/BookAdd.jsx"
+import { AboutGoal } from "./cmps/AboutCmps/AboutGoal.jsx"
+import { AboutTeam } from "./cmps/AboutCmps/AboutTeam.jsx"
 
 
 
@@ -22,6 +24,8 @@ export function App() {
                         <Route path="/" element={<Navigate to="/home" />} />
                         <Route path ="/home" element = {<HomePage/>}/>
                         <Route path ="/about" element = {<AboutUs/>}/>
+                        <Route path ="/about/team" element = {<AboutTeam/>}/>
+                        <Route path ="/about/goal" element = {<AboutGoal/>}/>
                         <Route path="/book" element={<BookIndex />} />
                         <Route path="/book/add" element={<BookAdd/>}></Route>
                         <Route path="/book/:bookId" element={<BookDetails />} />

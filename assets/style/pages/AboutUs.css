@@ -11,3 +11,9 @@
     font-size: 18px;
     color: #555;
 }
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Space between buttons */
+    margin-top: 15px;
+}
