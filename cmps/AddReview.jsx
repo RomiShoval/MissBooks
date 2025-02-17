@@ -11,9 +11,15 @@ export function AddReview(){
         readAt:""
     })
 
+    const [ratingType, setRatingType] = useState("rateBtSelect")
+
     function handleChange(ev){
         const { name , value } = ev.target;
         setReview(prevReview => ({...prevReview, [name]: value}));
+    }
+
+    function handleRatingChange(value){
+        setReview((prevReview) =>({...prevReview, reteBook:value}))
     }
 
     function onAddReview(ev){
@@ -27,6 +33,65 @@ export function AddReview(){
             })
             .finally(() => navigate('/book'))
         }
+
+    function DynamicCmp({ratingType,onRateChange}) {
+        switch (ratingType) {
+            case 'rateBySelect':
+                return <RateBySelect val={review.rateBook} onChange={onRateChange} />
+            case 'rateByTextBox':
+                return <RateByTextBox val={review.rateBook} onChange={onRateChange} />
+            case 'rateByStars':
+                return <RateByStars val={review.rateBook} onChange={onRateChange}/>
+            default:
+                return null
+        }
+    }
+
+    function RateBySelect({val,onChange}){
+        return(
+            <input
+            type = "range"
+            name = "rateType"
+            id="rate"
+            min = "0"
+            max="5"
+            value={val}
+            onChange={onchange("select")} 
+        />
+        )
+    }
+
+    function RateByTextBox({onChange}){
+        return(
+            <input
+            type = "range"
+            name = "rateType"
+            id="rate"
+            min = "0"
+            max="5"
+            value="textbox"
+            onChange={onchange("textbox")} 
+                />
+        )
+    }
+
+    function RateByStars({onChange}){
+        return(
+            <input
+            type = "range"
+            name = "rateType"
+            id="rate"
+            min = "0"
+            max="5"
+            value="stars"
+            onChange={onchange("stars")} 
+                />
+        )
+    }
+
+    function onSetRatingType(value){
+        setRatingType(value)
+    }
     
     
     return(
@@ -40,8 +105,8 @@ export function AddReview(){
                     onChange={handleChange} 
                 />
                 <br></br>
-                <label>Rate book :</label>
-                <input
+                {/* <label>Rate book :</label> */}
+                {/* <input
                     type = "range"
                     name = "rateBook"
                     id="rate"
@@ -49,7 +114,11 @@ export function AddReview(){
                     max="5"
                     value={review.rateBook}
                     onChange={handleChange} 
-                />
+                /> */}
+                <legend>Choose Rating Method:</legend>
+                 <section className="dynamic-cmps">
+                <DynamicCmp ratingType={ratingType}  onChange={onSetRatingType}/>
+            </section>
                 <br></br>
                 <label>Read At</label>
                 <input
