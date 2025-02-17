@@ -3,20 +3,25 @@ import "../assets/style/pages/BookIndex.css"
 import { BookList } from "../cmps/BookList.jsx";
 import { BookFilter } from "../cmps/BookFilter.jsx";
 import {sendSuccsessMsg , sendErrorMsg} from "../services/eventBusService.js"
+const { useSearchParams } = ReactRouterDOM
+import { getTruthyValues } from "../services/util.service.js";
 
 const { useState, useEffect } = React
 const { Link,useNavigate } = ReactRouterDOM
 
 export function BookIndex(){
     const[books,setBooks] = useState([])
-    const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
+    const[searchParams , setSearchParams] = useSearchParams()
+    const [filterBy, setFilterBy] = useState(bookService.getFilterFromSrcParams(searchParams))
     const navigate = useNavigate();
+   
 
     function goToAddBook() {
         navigate("/book/add");
     }
 
     useEffect(()=>{
+        setSearchParams(getTruthyValues(filterBy))
         loadBooks()
     },[filterBy])
 
@@ -58,7 +63,6 @@ export function BookIndex(){
             <h2>📚 Book List</h2>
             <BookFilter filterBy={filterBy} onSetFilter={onSetFilter}/>
             <button onClick={goToAddBook}>Add Book
-                {/* <Link to="/book/add">Add Book</Link> */}
             </button>
             <BookList 
                 books={books}

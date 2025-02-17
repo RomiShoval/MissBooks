@@ -12,7 +12,8 @@ export const bookService = {
     getDefaultFilter,
     addReview,
     deleteReview,
-    addGoogleBook
+    addGoogleBook,
+    getFilterFromSrcParams
 }
 
 
@@ -619,6 +620,22 @@ async function addGoogleBook(googleBook){
   books.push(newBook)
   await storageService.postMany(BOOKS_KEY,books)
   return newBook
+}
+
+function getFilterFromSrcParams(srcParams) {
+  const title = srcParams.get('title') || ''
+  const minPrice = srcParams.get('minPrice') || ''
+  const maxPrice = srcParams.get('maxPrice') || ''
+  const category = srcParams.get('category') || ''
+  const language = srcParams.get('language') || ''
+  return {
+      title,
+      minPrice,
+      maxPrice,
+      category,
+      language
+  }
+
 }
 
 // function queryBooksFromGoogle(){
