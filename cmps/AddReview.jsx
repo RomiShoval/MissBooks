@@ -1,6 +1,7 @@
 const { useState , useEffect } = React
 const { useParams, Link,useNavigate } = ReactRouterDOM
 import { bookService } from "../../../services/bookService.js";
+import "../assets/style/cmps/AddReview.css"
 
 export function AddReview(){
     const { bookId } = useParams()
@@ -97,7 +98,7 @@ export function AddReview(){
 
     
     return(
-        <div className="book review">
+        <div className="add-review">
             <h2>Review Book</h2>
             <form onSubmit={onAddReview}>
                 <label>Full Name:</label>
@@ -110,16 +111,17 @@ export function AddReview(){
                 <fieldset>
                     <legend>Choose Rating Method:</legend>
                     <label>
+                    Select
                         <input
                             type="radio"
                             name="ratingType"
                             value="rateBySelect"
                             checked={ratingType === "rateBySelect"}
                             onChange={() => setRatingType("rateBySelect")}
-                        />
-                        Select
+                        /> 
                     </label>
                     <label>
+                    Textbox
                         <input
                             type="radio"
                             name="ratingType"
@@ -127,9 +129,9 @@ export function AddReview(){
                             checked={ratingType === "rateByTextBox"}
                             onChange={() => setRatingType("rateByTextBox")}
                         />
-                        Textbox
                     </label>
                     <label>
+                    Stars
                         <input
                             type="radio"
                             name="ratingType"
@@ -137,7 +139,6 @@ export function AddReview(){
                             checked={ratingType === "rateByStars"}
                             onChange={() => setRatingType("rateByStars")}
                         />
-                        Stars
                     </label>
                 </fieldset>
                  <section className="dynamic-cmps">

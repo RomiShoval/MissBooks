@@ -1,0 +1,116 @@
+.add-review {
+    width: 450px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    font-family: "Poppins", sans-serif !important;
+    text-align: center;
+}
+
+
+.add-review h2 {
+    font-family: "Edu VIC WA NT Beginner", cursive !important;
+    font-size: 26px;
+    color: #a11a50;
+    margin-bottom: 15px;
+}
+
+
+.add-review label {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    color: #444 !important;
+}
+
+
+.add-review input,
+.add-review select {
+    width: 100% !important;
+    padding: 10px;
+    border: 2px solid #ddd !important;
+    border-radius: 6px !important;
+    font-size: 16px !important;
+    background-color: white !important;
+}
+
+
+
+.add-review fieldset {
+    width: 250px; 
+    margin: 15px auto; 
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;
+}
+
+
+.add-review fieldset label {
+    display: flex;
+    align-items: center;
+    justify-content:center; 
+    font-weight: bold;
+    font-size: 16px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+
+.add-review fieldset input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.add-review fieldset label:hover {
+    background: #e9ecef;
+    border-radius: 5px;
+}
+
+.add-review input[type="radio"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+}
+
+
+.add-review .stars span {
+    font-size: 24px !important;
+    cursor: pointer !important;
+    transition: color 0.3s !important;
+}
+
+.add-review .stars span:hover {
+    color: gold !important;
+}
+
+
+.add-review button {
+    cursor: pointer;
+    background: linear-gradient(135deg, #d32ea2, #a11a50) !important;
+    color: white !important;
+    margin: 0.5em;
+    border: none !important;
+    padding: 0.6em 1em;
+    border-radius: 6px !important;
+    font-weight: bold !important;
+    transition: background 0.3s ease-in-out;
+}
+
+.add-review button:hover {
+    background: linear-gradient(135deg, #5b0fc7, #1a5cc4) !important;
+    color: white !important;
+    transform: scale(1.05);
+}
+
+
+@media (max-width: 500px) {
+    .add-review {
+        width: 90%;
+    }
+}
