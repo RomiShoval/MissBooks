@@ -11,6 +11,7 @@ import { AddReview } from "./cmps/AddReview.jsx"
 import { BookAdd } from "./cmps/BookAdd.jsx"
 import { AboutGoal } from "./cmps/AboutCmps/AboutGoal.jsx"
 import { AboutTeam } from "./cmps/AboutCmps/AboutTeam.jsx"
+import { Dashboard } from "./cmps/DashBoard.jsx"
 
 
 
@@ -32,6 +33,7 @@ export function App() {
                         <Route path="/book/:bookId/addreview" element={<AddReview />} />
                         <Route path="/book/edit/:bookId" element={<BookEdit />} />
                         <Route path="/book/edit" element={<BookEdit />} />
+                        <Route path="/dashboard" element={<Dashboard />}/>                    
                     </Routes>
                 </main>
                 <UserMsg/>

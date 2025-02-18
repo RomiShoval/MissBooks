@@ -11,15 +11,15 @@ export function AddReview(){
         readAt:""
     })
 
-    const [ratingType, setRatingType] = useState("rateBtSelect")
+    const [ratingType, setRatingType] = useState("rateBySelect")
 
     function handleChange(ev){
         const { name , value } = ev.target;
         setReview(prevReview => ({...prevReview, [name]: value}));
     }
 
-    function handleRatingChange(value){
-        setReview((prevReview) =>({...prevReview, reteBook:value}))
+    function handleRatingChange(newValue){
+        setReview((prevReview) =>({...prevReview, rateBook:newValue}))
     }
 
     function onAddReview(ev){
@@ -34,65 +34,67 @@ export function AddReview(){
             .finally(() => navigate('/book'))
         }
 
-    function DynamicCmp({ratingType,onRateChange}) {
+    function DynamicCmp({ratingType,val,onRateChange}) {
         switch (ratingType) {
             case 'rateBySelect':
-                return <RateBySelect val={review.rateBook} onChange={onRateChange} />
+                return <RateBySelect val={val} onRateChange={onRateChange} />
             case 'rateByTextBox':
-                return <RateByTextBox val={review.rateBook} onChange={onRateChange} />
+                return <RateByTextBox val={val} onRateChange={onRateChange} />
             case 'rateByStars':
-                return <RateByStars val={review.rateBook} onChange={onRateChange}/>
+                return <RateByStars val={val} onRateChange={onRateChange}/>
             default:
                 return null
         }
     }
 
-    function RateBySelect({val,onChange}){
+    function RateBySelect({val,onRateChange}){
         return(
-            <input
-            type = "range"
-            name = "rateType"
-            id="rate"
-            min = "0"
-            max="5"
-            value={val}
-            onChange={onchange("select")} 
-        />
+            <div>
+                <label>Rate By Select:</label>
+                <select value={val} onChange={(e) => onRateChange(Number(e.target.value))}>
+                    {[...Array(6).keys()].map((num) => (
+                        <option key={num} value={num}>
+                            {num}
+                        </option>
+                    ))}
+                </select>
+            </div>
         )
     }
 
-    function RateByTextBox({onChange}){
+    function RateByTextBox({val,onRateChange}){
         return(
-            <input
-            type = "range"
-            name = "rateType"
-            id="rate"
-            min = "0"
-            max="5"
-            value="textbox"
-            onChange={onchange("textbox")} 
+            <div>
+                <label>Rate By TextBox:</label>
+                <input
+                    type = "number"        
+                    min = "0"
+                    max="5"
+                    value={val}
+                    onChange={(e) => onRateChange(Number(e.target.value))} 
                 />
-        )
+        
+            </div>
+        )    
     }
 
-    function RateByStars({onChange}){
+    function RateByStars({val,onRateChange}){
         return(
-            <input
-            type = "range"
-            name = "rateType"
-            id="rate"
-            min = "0"
-            max="5"
-            value="stars"
-            onChange={onchange("stars")} 
-                />
+          <div>
+            <label>Rate By Stars:</label>
+            {[...Array(5)].map((_, index) => (
+                    <span
+                        key={index}
+                        onClick={() => onRateChange(index + 1)}
+                        style={{ cursor: "pointer", color: index < val ? "gold" : "gray" }}
+                    >
+                        ★
+                    </span>
+                ))}
+          </div>
         )
     }
 
-    function onSetRatingType(value){
-        setRatingType(value)
-    }
-    
     
     return(
         <div className="book review">
@@ -105,19 +107,41 @@ export function AddReview(){
                     onChange={handleChange} 
                 />
                 <br></br>
-                {/* <label>Rate book :</label> */}
-                {/* <input
-                    type = "range"
-                    name = "rateBook"
-                    id="rate"
-                    min = "0"
-                    max="5"
-                    value={review.rateBook}
-                    onChange={handleChange} 
-                /> */}
-                <legend>Choose Rating Method:</legend>
+                <fieldset>
+                    <legend>Choose Rating Method:</legend>
+                    <label>
+                        <input
+                            type="radio"
+                            name="ratingType"
+                            value="rateBySelect"
+                            checked={ratingType === "rateBySelect"}
+                            onChange={() => setRatingType("rateBySelect")}
+                        />
+                        Select
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="ratingType"
+                            value="rateByTextBox"
+                            checked={ratingType === "rateByTextBox"}
+                            onChange={() => setRatingType("rateByTextBox")}
+                        />
+                        Textbox
+                    </label>
+                    <label>
+                        <input
+                            type="radio"
+                            name="ratingType"
+                            value="rateByStars"
+                            checked={ratingType === "rateByStars"}
+                            onChange={() => setRatingType("rateByStars")}
+                        />
+                        Stars
+                    </label>
+                </fieldset>
                  <section className="dynamic-cmps">
-                <DynamicCmp ratingType={ratingType}  onChange={onSetRatingType}/>
+                <DynamicCmp ratingType={ratingType} val = {review.rateBook} onRateChange={handleRatingChange}/>
             </section>
                 <br></br>
                 <label>Read At</label>
