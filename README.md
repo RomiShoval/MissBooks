@@ -29,6 +29,8 @@ It allows users to **browse, filter, add, edit, and review books** in a simple, 
 
 ---
 
+## Project Structure
+
 MissBooks/
 ├── assets/ # Static assets (images, styles)
 │ ├── img/BooksImages # Book cover images
@@ -39,6 +41,4 @@ MissBooks/
 ├── books.js # Initial book seed data
 ├── app.js # Main app entry point
 └── index.html # App container
-
-## Project Structure
 
