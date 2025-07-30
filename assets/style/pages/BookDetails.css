@@ -1,0 +1,137 @@
+.book-details {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 10px;
+}
+
+/* Thumbnail Image */
+.book-thumbnail {
+    width: 100%;
+    max-width: 250px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+/* On Sale Sign */
+.on-sale-sign {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Pricing Colors */
+.price-high {
+    color: red;
+    font-weight: bold;
+}
+
+.price-low {
+    color: green;
+    font-weight: bold;
+}
+
+.price-normal {
+    color: black;
+}
+
+/* Back Button */
+.back-btn {
+    display: inline-block;
+    padding: 10px;
+    background-color: #e32d9a;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.back-btn:hover {
+    background-color: #c12680;
+}
+
+/* ========================== */
+/*        REVIEW SECTION      */
+/* ========================== */
+
+/* Review Section Container */
+.review-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f7f7f7;
+    border-radius: 10px;
+}
+
+/* Review List */
+.review-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+/* Single Review Item */
+.review-item {
+    background: white;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Review Header */
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+/* Review Text Styling */
+.review-item p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Review Rating */
+.review-rating {
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff9800; /* Orange stars */
+}
+
+/* Review Date */
+.review-date {
+    font-size: 13px;
+    color: #777;
+}
+
+/* Delete Review Button */
+.delete-review-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 12px;
+    transition: background 0.3s;
+    align-self: flex-end;
+    margin-top: 5px;
+}
+
+.delete-review-btn:hover {
+    background-color: #c0392b;
+}
