@@ -29,16 +29,5 @@ It allows users to **browse, filter, add, edit, and review books** in a simple, 
 
 ---
 
-## Project Structure
-
-MissBooks/
-├── assets/ # Static assets (images, styles)
-│ ├── img/BooksImages # Book cover images
-│ └── style/cmps # Component-specific CSS files
-├── cmps/ # React components (BookList, BookPreview, etc.)
-├── pages/ # Page-level components (Home, About, BookIndex)
-├── services/ # Data handling and bookService (with localStorage)
-├── books.js # Initial book seed data
-├── app.js # Main app entry point
-└── index.html # App container
-
+## GitHub Page
+https://romishoval.github.io/MissBooks/
